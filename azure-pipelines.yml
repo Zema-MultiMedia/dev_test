@@ -61,7 +61,6 @@ stages:
     - job: deploy
       displayName: deploying to production resource
       steps:
-      environment: 'production'
         - task: AzureContainerAppsRC@0
           displayName: deploy
           inputs:
@@ -72,4 +71,5 @@ stages:
             imageToDeploy: "zemacontainerregistry.azurecr.io/zemapodcasttest:$(Build.BuildId)"
             acrUsername: "ZemaContainerRegistry"
             acrPassword: "uACzB4/J3SGDvAy6MfTMc79kyk9IzWGbfv3YdQKIpi+ACRBPbvFZ"
+      environment: 'production'
  
