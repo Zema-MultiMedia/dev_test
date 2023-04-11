@@ -57,7 +57,7 @@ stages:
             
 - stage: Deploy_Production
   displayName: deploy for For Production
-      environment: $(environmentName)
+      environment: 'production'
   jobs:
     - job: deploy
       displayName: deploying to production resource
