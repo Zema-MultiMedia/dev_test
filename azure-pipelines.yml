@@ -55,6 +55,7 @@ stages:
         imageToDeploy: "zemacontainerregistry.azurecr.io/zemapodcasttest:$(Build.BuildId)"
         acrUsername: "ZemaContainerRegistry"
         acrPassword: "uACzB4/J3SGDvAy6MfTMc79kyk9IzWGbfv3YdQKIpi+ACRBPbvFZ"
+        environment: 'production'
         
 - stage: Deploy_Production
   displayName: deploy for Production
