@@ -73,14 +73,4 @@ stages:
         acrUsername: "ZemaContainerRegistry"
         acrPassword: "uACzB4/J3SGDvAy6MfTMc79kyk9IzWGbfv3YdQKIpi+ACRBPbvFZ"
 
-- stage: Deploy_Production
-  displayName: deploy for Production
-  dependsOn: []
-  condition: succeeded()
-  jobs:
-  - job: deploy-production
-    environment:
-      name: 'production'
-    steps:
-    - template: 'deploy-production-job.yml'
  
