@@ -58,10 +58,10 @@ stages:
             
 - stage: Deploy_Production
   displayName: deploy for Production
-  environment: "production"
   jobs:
   - job: deploy
     displayName: deploying to production resource
+    environment: "production"
     steps:
     - task: AzureContainerAppsRC@0
       displayName: deploy
