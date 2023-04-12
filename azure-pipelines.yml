@@ -61,12 +61,12 @@ stages:
   jobs:
   - job: deploy
     displayName: deploying to production resource
+    environment:
+      name: 'production'
+      resourceType: 'ContainerApp'
     steps:
     - task: AzureContainerAppsRC@0
       displayName: deploy
-      environment:
-        name: 'production'
-        resourceType: 'ContainerApp'
       inputs:
         azureSubscription: "devops"
         acrName: "ZemaContainerRegistry"
