@@ -60,7 +60,7 @@ stages:
         
 - stage: Deploy_Production
   displayName: deploy for Production
-  dependsOn: Build
+  dependsOn: Deploy_Staging
   jobs:
     - job: deploy_production
       displayName: deploying to production resource
