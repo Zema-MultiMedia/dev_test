@@ -15,7 +15,6 @@ variables:
   containerRegistry: 'zemacontainerregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
-  environmentName: 'production'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -46,7 +45,10 @@ stages:
   jobs:
   - job: deploy
     displayName: deploying to container
-    environment: "staging"
+    environment:
+      name: 'staging'
+      resourceType: 'Container'
+      tags: 'staging'
     steps:
     - task: AzureContainerAppsRC@0
       displayName: deploy
@@ -65,7 +67,10 @@ stages:
   jobs:
   - job: deploy
     displayName: deploying to production resource
-    environment: production
+    environment:
+      name: 'production'
+      resourceType: 'Container'
+      tags: 'production'
     steps:
     - task: AzureContainerAppsRC@0
       displayName: deploy
@@ -77,6 +82,5 @@ stages:
         imageToDeploy: "zemacontainerregistry.azurecr.io/zemapodcasttest:$(Build.BuildId)"
         acrUsername: "ZemaContainerRegistry"
         acrPassword: "uACzB4/J3SGDvAy6MfTMc79kyk9IzWGbfv3YdQKIpi+ACRBPbvFZ"
-        environment: 'production'
 
  
