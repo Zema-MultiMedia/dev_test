@@ -7,6 +7,7 @@ trigger:
   branches:
     include:
     - main
+    - master
 
 
 
@@ -65,8 +66,8 @@ stages:
         
 - stage: Deploy_Production
   displayName: deploy for Production
-  dependsOn: Deploy_Staging
-  condition: succeeded('Deploy_Staging',eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  dependsOn: Build
+  condition: succeeded('Deploy_Staging',eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
     - job: deploy_production
       displayName: deploying to production resource
