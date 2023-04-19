@@ -4,6 +4,7 @@
 
 trigger:
 - main
+- master
 
 resources:
 - repo: self
@@ -42,7 +43,7 @@ stages:
 - stage: Deploy_Staging
   displayName: deploy for Staging
   dependsOn: Build
-  condition: succeeded()
+  condition: succeeded('Build')
   jobs:
     - job: deploy_staging
       displayName: deploying to container
@@ -61,6 +62,7 @@ stages:
 - stage: Deploy_Production
   displayName: deploy for Production
   dependsOn: Deploy_Staging
+  condition: succeeded('Deploy_Staging',eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
     - job: deploy_production
       displayName: deploying to production resource
