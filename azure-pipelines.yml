@@ -43,7 +43,7 @@ stages:
   dependsOn: Build
   condition: succeeded()
   jobs:
-  - job: deploy
+  - job: deploy_staging
     displayName: deploying to container
     environment:
       name: 'staging'
@@ -63,8 +63,9 @@ stages:
         
 - stage: Deploy_Production
   displayName: deploy for Production
+  dependsOn: Build
   jobs:
-  - job: deploy
+  - job: deploy_production
     displayName: deploying to production resource
     environment:
       name: 'production'
