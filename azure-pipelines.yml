@@ -15,6 +15,7 @@ variables:
   containerRegistry: 'zemacontainerregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
+  environmentName: 'Staging'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -45,10 +46,6 @@ stages:
   jobs:
     - job: deploy_staging
       displayName: deploying to container
-      environment:
-        name: 'staging'
-        resourceType: 'Container'
-        tags: 'staging'
       steps:
       - task: AzureContainerAppsRC@0
         displayName: deploy
@@ -67,10 +64,6 @@ stages:
   jobs:
     - job: deploy_production
       displayName: deploying to production resource
-      env:
-        name: 'production'
-        resourceType: 'Container'
-        tags: 'production'
       steps:
       - task: AzureContainerAppsRC@0
         displayName: deploy
