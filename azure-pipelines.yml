@@ -45,7 +45,7 @@ stages:
   jobs:
     - job: deploy_staging
       displayName: deploying to container
-      env:
+      environment:
         name: 'staging'
         resourceType: 'Container'
         tags: 'staging'
