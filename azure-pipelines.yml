@@ -23,64 +23,64 @@ stages:
 - stage: Build
   displayName: Build and push stage
   jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+    - job: Build
+      displayName: Build
+      pool:
+        vmImage: $(vmImageName)
+      steps:
+      - task: Docker@2
+        displayName: Build and push an image to container registry
+        inputs:
+          command: buildAndPush
+          repository: $(imageRepository)
+          dockerfile: $(dockerfilePath)
+          containerRegistry: $(dockerRegistryServiceConnection)
+          tags: |
+            $(tag)
           
 - stage: Deploy_Staging
   displayName: deploy for Staging
   dependsOn: Build
   condition: succeeded()
   jobs:
-  - job: deploy_staging
-    displayName: deploying to container
-    environment:
-      name: 'staging'
-      resourceType: 'Container'
-      tags: 'staging'
-    steps:
-    - task: AzureContainerAppsRC@0
-      displayName: deploy
-      inputs:
-        azureSubscription: "devops"
-        acrName: "ZemaContainerRegistry"
-        containerAppName: "music-service-production"
-        resourceGroup: "Production"
-        imageToDeploy: "zemacontainerregistry.azurecr.io/zemapodcasttest:$(Build.BuildId)"
-        acrUsername: "ZemaContainerRegistry"
-        acrPassword: "uACzB4/J3SGDvAy6MfTMc79kyk9IzWGbfv3YdQKIpi+ACRBPbvFZ"
+    - job: deploy_staging
+      displayName: deploying to container
+      environment:
+        name: 'staging'
+        resourceType: 'Container'
+        tags: 'staging'
+      steps:
+      - task: AzureContainerAppsRC@0
+        displayName: deploy
+        inputs:
+          azureSubscription: "devops"
+          acrName: "ZemaContainerRegistry"
+          containerAppName: "music-service-production"
+          resourceGroup: "Production"
+          imageToDeploy: "zemacontainerregistry.azurecr.io/zemapodcasttest:$(Build.BuildId)"
+          acrUsername: "ZemaContainerRegistry"
+          acrPassword: "uACzB4/J3SGDvAy6MfTMc79kyk9IzWGbfv3YdQKIpi+ACRBPbvFZ"
         
 - stage: Deploy_Production
   displayName: deploy for Production
   dependsOn: Build
   jobs:
-  - job: deploy_production
-    displayName: deploying to production resource
-    environment:
-      name: 'production'
-      resourceType: 'Container'
-      tags: 'production'
-    steps:
-    - task: AzureContainerAppsRC@0
-      displayName: deploy
-      inputs:
-        azureSubscription: "devops"
-        acrName: "ZemaContainerRegistry"
-        containerAppName: "exam"
-        resourceGroup: "Production"
-        imageToDeploy: "zemacontainerregistry.azurecr.io/zemapodcasttest:$(Build.BuildId)"
-        acrUsername: "ZemaContainerRegistry"
-        acrPassword: "uACzB4/J3SGDvAy6MfTMc79kyk9IzWGbfv3YdQKIpi+ACRBPbvFZ"
+    - job: deploy_production
+      displayName: deploying to production resource
+      environment:
+        name: 'production'
+        resourceType: 'Container'
+        tags: 'production'
+      steps:
+      - task: AzureContainerAppsRC@0
+        displayName: deploy
+        inputs:
+          azureSubscription: "devops"
+          acrName: "ZemaContainerRegistry"
+          containerAppName: "exam"
+          resourceGroup: "Production"
+          imageToDeploy: "zemacontainerregistry.azurecr.io/zemapodcasttest:$(Build.BuildId)"
+          acrUsername: "ZemaContainerRegistry"
+          acrPassword: "uACzB4/J3SGDvAy6MfTMc79kyk9IzWGbfv3YdQKIpi+ACRBPbvFZ"
 
  
