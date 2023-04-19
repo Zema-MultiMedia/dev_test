@@ -44,7 +44,7 @@ stages:
   displayName: deploy for Staging
   dependsOn: Build
   # condition: succeeded('Build')
-  condition: succeeded('Deploy_Staging',eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded('Build',eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
     - job: deploy_staging
       displayName: deploying to container
